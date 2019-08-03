@@ -4,11 +4,19 @@ WORKDIR /app
 
 ENV PATH /app/node_modules/.bin:$PATH
 
-COPY package.json /app/package.json
-# RUN npm install --silent
 # RUN npm install react-scripts@3.0.1 -g --silent
-COPY docker-yarn.lock /app/yarn.lock
-RUN yarn install
-# RUN npm install react-scripts@3.0.1 -g
+RUN yarn global add react-scripts serve
 
-CMD ["npm", "start"]
+COPY package.json /app/package.json
+COPY yarn.lock /app/yarn.lock
+
+RUN yarn add react-dom
+
+COPY public /app/public/
+COPY src /app/src/
+
+RUN yarn build
+
+EXPOSE 5000
+
+CMD ["serve", "-s", "build"]
