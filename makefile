@@ -1,6 +1,7 @@
 server:
 	npm start
 
+# Don't bother with this. CircleCI will deploy from GitHub
 deploy:
 	git push heroku master
 
